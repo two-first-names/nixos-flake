@@ -12,18 +12,24 @@
   outputs =
     { nixpkgs, home-manager, ... }:
     {
-      nixosConfigurations.amity = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        modules = [
-          ./hosts/amity
-          home-manager.nixosModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
+      nixosConfigurations = {
+        amity = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules = [
+            ./hosts/amity
+            home-manager.nixosModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
 
-            home-manager.users.joe = ./home/joe;
-          }
-        ];
+              home-manager.users.joe = ./home/joe;
+            }
+          ];
+        };
+        hetzner = nixpkgs.lib.nixosSystem {
+          system = "aarch64-linux";
+          modules = [ ./hosts/hetzner ];
+        };
       };
     };
 }
