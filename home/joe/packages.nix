@@ -63,5 +63,7 @@
     ethtool
     pciutils # lspci
     usbutils # lsusb
+
+    flameshot
   ];
 }

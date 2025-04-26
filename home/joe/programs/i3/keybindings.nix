@@ -65,5 +65,8 @@
     "XF86AudioRaiseVolume" = "exec pamixer --increase 4";
     "XF86MonBrightnessDown" = "exec brightnessctl set 4%-";
     "XF86MonBrightnessUp" = "exec brightnessctl set 4%+";
+
+    "Print" = "exec ${pkgs.flameshot}/bin/flameshot gui";
+    "F9" = "exec ${pkgs.flameshot}/bin/flameshot gui";
   };
 }
