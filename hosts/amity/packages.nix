@@ -8,6 +8,7 @@
     bluez
     bluez-tools
     tpm2-tss
+    wireguard-tools
 
     rocmPackages.rocm-smi
   ];

@@ -11,8 +11,9 @@
     ./luks.nix
     ./packages.nix
     ./users.nix
-    ./x.nix
     ./wifi.nix
+    ./wireguard.nix
+    ./x.nix
   ];
 
   nix.settings.experimental-features = [
