@@ -65,5 +65,7 @@
     usbutils # lsusb
 
     flameshot
+
+    signal-desktop
   ];
 }
