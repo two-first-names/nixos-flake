@@ -34,7 +34,7 @@
 
     "Mod4+1" = "workspace number 1";
     "Mod4+2" = "workspace number 2";
-    "Mod4+3" = "workspace number 3";
+    "Mod4+3" = "workspace number 3; layout tabbed";
     "Mod4+4" = "workspace number 4";
     "Mod4+5" = "workspace number 5";
     "Mod4+6" = "workspace number 6";

@@ -17,6 +17,7 @@
       enableZshIntegration = true;
       nix-direnv.enable = true;
     };
+    alacritty.enable = true;
     firefox.enable = true;
     fuzzel.enable = true;
     hyfetch.enable = true;
