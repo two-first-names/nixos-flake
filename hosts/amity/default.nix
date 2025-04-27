@@ -4,6 +4,8 @@
   imports = [
     ./hardware-configuration.nix
 
+    ../../modules/update-nixos
+
     ./audio.nix
     ./boot.nix
     ./etc.nix
