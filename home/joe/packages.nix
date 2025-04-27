@@ -67,5 +67,7 @@
     flameshot
 
     signal-desktop
+    discord
+    slack
   ];
 }
