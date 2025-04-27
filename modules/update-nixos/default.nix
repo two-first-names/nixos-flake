@@ -27,6 +27,8 @@
         in
         lib.getExe script;
     };
+
+    wantedBy = "multi-user.target";
   };
 
   systemd.timers.pull-nixos = {
