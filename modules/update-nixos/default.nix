@@ -10,7 +10,6 @@
 
     serviceConfig = {
       Type = "oneshot";
-      RemainAfterExit = true;
       ExecStart =
         let
           script = pkgs.writeShellApplication {
@@ -22,14 +21,12 @@
             text = ''
               git -C /etc/nixos reset --hard HEAD
               git -C /etc/nixos pull
-              nixos-rebuild switch
+              nixos-rebuild switch || true
             '';
           };
         in
         lib.getExe script;
     };
-
-    restartIfChanged = false;
 
     wantedBy = [ "multi-user.target" ];
   };
