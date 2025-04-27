@@ -10,6 +10,7 @@
 
     serviceConfig = {
       Type = "oneshot";
+      RemainAfterExit = true;
       ExecStart =
         let
           script = pkgs.writeShellApplication {
@@ -27,6 +28,8 @@
         in
         lib.getExe script;
     };
+
+    restartIfChanged = false;
 
     wantedBy = [ "multi-user.target" ];
   };
