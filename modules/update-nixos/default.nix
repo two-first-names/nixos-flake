@@ -15,7 +15,7 @@ in
     flags = [
       "-L"
     ];
-    dates = "04:40";
+    dates = "hourly";
     persistent = true;
     randomizedDelaySec = "45min";
   };
@@ -68,5 +68,19 @@ in
     };
 
     before = [ "nixos-upgrade.service" ];
+  };
+
+  nix = {
+    gc = {
+      automatic = true;
+      dates = "weekly";
+      options = "--delete-older-than 30d";
+    };
+
+    # Also collect garbage if disk has less than 100MB free
+    extraOptions = ''
+      min-free = ${toString (100 * 1024 * 1024)}
+      max-free = ${toString (2 * 1024 * 1024 * 1024)}
+    '';
   };
 }
