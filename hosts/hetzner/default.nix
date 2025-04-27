@@ -1,16 +1,25 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 {
   imports = [
     ./hardware-configuration.nix
-    ../../servers/sshd
-    ../../servers/users
-    ../../lib/pull-nixos
+    ../../modules/sshd
+    ../../modules/users
+    ../../modules/update-nixos
   ];
 
   nix.settings.experimental-features = [
     "nix-command"
     "flakes"
   ];
+
+  nix.settings.trusted-users = [ "admin" ];
+
+  networking.hostName = lib.mkDefault "hetzner";
+  system.activationScripts.reload-hostname = {
+    text = ''
+      hostname -F /etc/hostname
+    '';
+  };
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;

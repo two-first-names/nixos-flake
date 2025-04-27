@@ -30,6 +30,10 @@
           system = "aarch64-linux";
           modules = [ ./hosts/hetzner ];
         };
+        "test.engiqueer" = nixpkgs.lib.nixosSystem {
+          system = "aarch64-linux";
+          modules = [ ./hosts/lighthouse ];
+        };
       };
     };
 }
