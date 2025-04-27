@@ -1,41 +1,72 @@
-{ pkgs, lib, ... }:
 {
-  systemd.services.update-nixos = {
+  pkgs,
+  lib,
+  config,
+  ...
+}:
+
+let
+  flakePath = "/etc/nixos";
+in
+{
+  system.autoUpgrade = {
     enable = true;
+    flake = "${flakePath}#${config.networking.hostName}";
+    flags = [
+      "-L"
+    ];
+    dates = "04:40";
+    persistent = true;
+    randomizedDelaySec = "45min";
+  };
+
+  systemd.services.nixos-upgrade = {
+    preStart = "${pkgs.host}/bin/host github.com";
+
+    serviceConfig = {
+      Restart = "on-failure";
+      RestartSec = "120";
+    };
 
     unitConfig = {
-      Description = "Pull /etc/nixos repository.";
-      After = "network.target";
+      StartLimitIntervalSec = 600;
+      StartLimitBurst = 2;
+    };
+
+    after = [ "flake-update.service" ];
+    wants = [ "flake-update.service" ];
+  };
+
+  systemd.services.flake-update = {
+    preStart = "${pkgs.host}/bin/host github.com";
+
+    unitConfig = {
+      Description = "Update ${flakePath} flake.";
+      StartLimitIntervalSec = 300;
+      StartLimitBurst = 5;
     };
 
     serviceConfig = {
       Type = "oneshot";
+      Restart = "on-failure";
+      RestartSec = "30";
       ExecStart =
         let
           script = pkgs.writeShellApplication {
-            name = "update-nixos";
+            name = "flake-update";
             runtimeInputs = with pkgs; [
               git
               nixos-rebuild
             ];
             text = ''
-              git -C /etc/nixos reset --hard HEAD
-              git -C /etc/nixos pull
-              nixos-rebuild switch || true
+              git -C  ${flakePath} reset --hard HEAD
+              git -C ${flakePath} pull
             '';
           };
         in
         lib.getExe script;
     };
 
-    wantedBy = [ "multi-user.target" ];
-  };
-
-  systemd.timers.pull-nixos = {
-    enable = true;
-
-    timerConfig = {
-      OnCalendar = "hourly";
-    };
+    before = [ "nixos-upgrade.service" ];
   };
 }
