@@ -12,6 +12,7 @@
     ./i18n.nix
     ./luks.nix
     ./packages.nix
+    ./pam.nix
     ./tls.nix
     ./users.nix
     ./wifi.nix
